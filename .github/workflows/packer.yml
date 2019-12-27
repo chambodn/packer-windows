@@ -15,7 +15,7 @@ jobs:
       - name: packer build packer.json
         uses: docker://dchambon/packer-ansible:latest
         with:
-          args: build packer.json
+          args: build -force packer.json
         env:
           GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
           GKE_ACCOUNT: ${{ secrets.GKE_ACCOUNT }}
