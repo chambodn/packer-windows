@@ -9,11 +9,11 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: packer validate packer.json
-        uses: docker://hashicorp/packer:1.5.1
+        uses: docker://dchambon/packer-ansible:latest
         with:
           args: validate packer.json
       - name: packer build packer.json
-        uses: docker://hashicorp/packer:1.5.1
+        uses: docker://dchambon/packer-ansible:latest
         with:
           args: build packer.json
         env:
