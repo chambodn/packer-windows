@@ -3,9 +3,7 @@
         "project_id": "sandbox-249706",
         "account_file": "{{env `GKE_ACCOUNT`}}",
         "packer_user": "packer",
-        "zone": "europe-west1-b",
-        "ansible_host": "default",
-        "ansible_connection": "docker"    
+        "zone": "europe-west1-b"
     },
     "builders": [
         {
@@ -32,10 +30,10 @@
     "provisioners": [
     {
       "type":  "ansible",
-      "groups": [ "packer" ],
       "playbook_file": "./win-playbook.yml",
       "extra_arguments": [
-        "--extra-vars", "ansible_shell_type=powershell ansible_shell_executable=None {{user `ansible_host`}} ansible_connection={{user `ansible_connection`}}"
+        "--connection", "packer",
+        "--extra-vars", "ansible_shell_type=powershell ansible_shell_executable=None"
       ]
     }
   ]
