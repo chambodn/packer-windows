@@ -31,8 +31,10 @@
     {
       "type":  "powershell",
       "scripts": [
-        "scripts/00-setup.ps1",
-        "scripts/01-install-chocolatey.ps1"
+        "scripts/00_setup.ps1",
+        "scripts/01_install-chocolatey.ps1",
+        "scripts/02_win-updates.ps1",
+        "scripts/03_openssh.ps1"
         ]
     }
   ]

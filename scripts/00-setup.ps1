@@ -11,5 +11,5 @@ try {
         }
     }
 } finally {
-          $env:path = $old_path
+    $env:path = $old_path
 }
