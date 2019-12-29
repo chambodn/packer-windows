@@ -24,7 +24,7 @@
             "winrm_insecure": true,
             "winrm_use_ssl": true,
             "metadata": {
-                "windows-startup-script-cmd": "winrm quickconfig -quiet & net user /add {{user `packer_user`}} & net localgroup administrators {{user `packer_user`}} /add & winrm set winrm/config/service/auth @{Basic=\"true\"}"
+                "sysprep-specialize-script-cmd": "winrm quickconfig -quiet & net user /add {{user `packer_user`}} & net localgroup administrators {{user `packer_user`}} /add & winrm set winrm/config/service/auth @{Basic=\"true\"}"
             },
             "zone": "{{ user `zone` }}"
         }
@@ -32,9 +32,9 @@
     "provisioners": [
     {
       "type":  "ansible",
-      "groups": [ "packer" ],
       "playbook_file": "./win-playbook.yml",
       "extra_arguments": [
+        "--connection", "packer",
         "--extra-vars", "ansible_shell_type=powershell ansible_shell_executable=None"
       ]
     }

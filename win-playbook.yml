@@ -1,4 +1,4 @@
-- hosts: packer
+- hosts: all
   gather_facts: false
   vars:
     windows_unicode_language: en-GB
