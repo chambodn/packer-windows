@@ -35,7 +35,7 @@
       "groups": [ "packer" ],
       "playbook_file": "./win-playbook.yml",
       "extra_arguments": [
-        "--extra-vars", "ansible_shell_type=powershell ansible_shell_executable=None {{user `ansible_host`}} ansible_connection={{user `ansible_connection`}}"
+        "--extra-vars", "ansible_shell_type=powershell ansible_shell_executable=None"
       ]
     }
   ]
