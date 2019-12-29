@@ -3,9 +3,7 @@
         "project_id": "sandbox-249706",
         "account_file": "{{env `GKE_ACCOUNT`}}",
         "packer_user": "packer",
-        "zone": "europe-west1-b",
-        "ansible_host": "default",
-        "ansible_connection": "docker"    
+        "zone": "europe-west1-b"
     },
     "builders": [
         {
@@ -31,11 +29,11 @@
     ],  
     "provisioners": [
     {
-      "type":  "ansible",
-      "playbook_file": "./win-playbook.yml",
-      "extra_arguments": [
-        "-vvvv"
-      ]
+      "type":  "powershell",
+      "scripts": [
+        "scripts/00-setup.ps1",
+        "scripts/01-install-chocolatey.ps1"
+        ]
     }
   ]
 }
