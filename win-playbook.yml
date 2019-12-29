@@ -10,7 +10,7 @@
     windows_temp_dir: C:\Users\packer\AppData\Local\Temp
   tasks:
     # https://docs.ansible.com/ansible/latest/user_guide/windows_performance.html
-    - name: Improve PowerShell performance
+    - name: Improve PowerShell performance => OK
       win_shell: |
         # NGEN powershell assembly, improves startup time of powershell by 10x
         $old_path = $env:path
@@ -28,7 +28,7 @@
           $env:path = $old_path
         }
     
-    - name: 'Ensure few packages are installed'
+    - name: 'Ensure few packages are installed' => OK
       win_chocolatey:
         name: '{{ item }}'
         state: present
@@ -49,7 +49,7 @@
         groups:
           - Administrators
     
-    - name: 'Install all security updates with automatic reboots (if needed)'
+    - name: 'Install all security updates with automatic reboots (if needed)' => OK
       win_updates:
         category_names:
           - SecurityUpdates

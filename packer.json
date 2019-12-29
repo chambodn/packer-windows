@@ -3,7 +3,8 @@
         "project_id": "sandbox-249706",
         "account_file": "{{env `GKE_ACCOUNT`}}",
         "packer_user": "packer",
-        "zone": "europe-west1-b"
+        "zone": "europe-west1-b",
+        "pstools_url": "https://download.sysinternals.com/files/PSTools.zip"
     },
     "builders": [
         {
@@ -11,7 +12,7 @@
             "account_file": "{{user `account_file`}}",
             "project_id": "{{user `project_id`}}",
             "image_name": "packer-test",
-            "source_image": "windows-server-2016-dc-v20191210",
+            "source_image_family": "windows-2016",
             "disk_size": "50",
             "disk_type": "pd-ssd",
             "machine_type": "n1-standard-4",
@@ -32,10 +33,35 @@
       "type":  "powershell",
       "scripts": [
         "scripts/02_win-updates.ps1",
-        "scripts/03_openssh.ps1"
+        "scripts/04_update-registry.ps1"
         ],
       "elevated_user": "SYSTEM",
       "elevated_password": ""
+    },
+    {
+      "type": "powershell",
+      "inline": [
+        "Write-Output \"Set TimeZone to Romance:\"",
+        "Set-TimeZone -Id \"Romance Standard Time\" -PassThru",
+
+        "Write-Output \"Change unicode language:\"",
+        "Set-WinSystemLocale -SystemLocale en-GB",
+
+        "Write-Output \"Ensure the required NuGet package provider version is installed:\"",
+        "Find-PackageProvider -Name Nuget -ForceBootstrap -IncludeDependencies -Force",
+        
+        "Write-Output \"Install PowerShellGet module:\"",
+        "Install-Module PowerShellGet -Force -AllowClobber",
+
+        "Write-Output \"Install LoopbackAdapter module:\"",
+        "Install-Module LoopbackAdapter -Force -AllowClobber",
+
+        "Write-Output \"Download and install pstools\"",
+        "Invoke-WebRequest -Uri '{{user `pstools_url`}}' -OutFile '$env:TEMP\\pstools.zip'",
+        "Microsoft.PowerShell.Archive\\Expand-Archive -Path '$env:TEMP\\pstools.zip' -DestinationPath '$env:TEMP\\pstools'",
+        "Move-Item -Path '$env:TEMP\\pstools\\psexec.exe' 'C:\\WINDOWS\\system32\\psexec.exe'",
+        "Remove-Item -Path '$env:TEMP\\pstools' -Recurse"
+      ]
     }
   ]
 }

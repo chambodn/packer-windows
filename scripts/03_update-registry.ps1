@@ -1,3 +1,5 @@
+$ErrorActionPreference = "Stop"
+
 $registryPath = "HKCU:\Software\ScriptingGuys\Scripts"
 $Name = "Version"
 $value = "1"

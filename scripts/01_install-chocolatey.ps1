@@ -1,3 +1,4 @@
+$ErrorActionPreference = "Stop"
 #Requires -RunAsAdministrator
 
 Set-ExecutionPolicy Bypass -Scope Process -Force

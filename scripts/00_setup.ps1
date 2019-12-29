@@ -1,3 +1,5 @@
+$ErrorActionPreference = "Stop"
+
 # NGEN powershell assembly, improves startup time of powershell by 10x
 $old_path = $env:path
 try {
