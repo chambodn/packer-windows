@@ -25,6 +25,8 @@ $entries = @([EntryRegistry]::new("Hidden","dword","HKCU:\Software\Microsoft\Win
              [EntryRegistry]::new("ConsentPromptBehaviorAdmin","dword","HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System",0)
              [EntryRegistry]::new("DoNotOpenServerManagerAtLogon","dword","HKCU:\Software\Microsoft\ServerManager",1))
 
+Write-Host "Update / Create few registry entries..."
+
 try{
     $entries | ForEach{
         If(!(Test-Path $_.path)){
@@ -35,6 +37,7 @@ try{
             New-ItemProperty -Path $_.path -Name $_.name -Value $_.data -PropertyType $_.type -Force | Out-Null
         }
     }
+    Write-Host "Registry successfully updated"
 }
 catch {
     Write-Host "An error occurred:"
