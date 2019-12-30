@@ -25,15 +25,18 @@ $entries = @([EntryRegistry]::new("Hidden","dword","HKCU:\Software\Microsoft\Win
              [EntryRegistry]::new("ConsentPromptBehaviorAdmin","dword","HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System",0)
              [EntryRegistry]::new("DoNotOpenServerManagerAtLogon","dword","HKCU:\Software\Microsoft\ServerManager",1))
 
-$entries | ForEach{
-    If(!(Test-Path $_.path)){
-        New-Item -Path $_.path -Force | Out-Null
-        New-ItemProperty -Path $_.path -Name $_.name -Value $_.data -PropertyType $_.type -Force | Out-Null
-    }
-    Else {
-        New-ItemProperty -Path $_.path -Name $_.name -Value $_.data -PropertyType $_.type -Force | Out-Null
+try{
+    $entries | ForEach{
+        If(!(Test-Path $_.path)){
+            New-Item -Path $_.path -Force | Out-Null
+            New-ItemProperty -Path $_.path -Name $_.name -Value $_.data -PropertyType $_.type -Force | Out-Null
+        }
+        Else {
+            New-ItemProperty -Path $_.path -Name $_.name -Value $_.data -PropertyType $_.type -Force | Out-Null
+        }
     }
 }
-
-
-
+catch {
+    Write-Host "An error occurred:"
+    Write-Host $_    
+}

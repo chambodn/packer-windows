@@ -56,7 +56,6 @@
     },
     {
       "type":  "powershell",
-      "elevated_user": "{{user `packer_user`}}",
       "scripts": [
         "scripts/setup.ps1",
         "scripts/install-chocolatey.ps1",
