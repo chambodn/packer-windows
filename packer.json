@@ -56,7 +56,7 @@
     },
     {
       "type":  "powershell",
-      "elevated_user": "Administrator",
+      "elevated_user": "{{user `packer_user`}}",
       "elevated_password": "{{.WinRMPassword}}",
       "scripts": [
         "scripts/setup.ps1",
