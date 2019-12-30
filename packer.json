@@ -57,8 +57,6 @@
     {
       "type":  "powershell",
       "elevated_user": "{{user `packer_user`}}",
-      "elevated_password": "{{.WinRMPassword}}",
-      "elevated_execute_command": "powershell -NonInteractive -NoProfile -NoLogo -ExecutionPolicy Unrestricted -Command \"$ErrorActionPreference = 'Stop'; . {{.Vars}}; &'{{.Path}}'; if ((test-path variable:global:lastexitcode)) {{ exit $LastExitCode }}}}\"",
       "scripts": [
         "scripts/setup.ps1",
         "scripts/install-chocolatey.ps1",
