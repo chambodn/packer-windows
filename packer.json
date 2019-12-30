@@ -57,13 +57,21 @@
     {
       "type":  "powershell",
       "scripts": [
-        "scripts/00_setup.ps1",
-        "scripts/01_install-chocolatey.ps1",
-        "scripts/02_win-updates.ps1",
-        "scripts/03_update-registry.ps1"
+        "scripts/setup.ps1",
+        "scripts/install-chocolatey.ps1",
+        "scripts/update-registry.ps1"
+        ]
+    },
+    {
+      "type":  "powershell",
+      "scripts": [
+        "scripts/win-updates.ps1"
         ],
       "elevated_user": "SYSTEM",
       "elevated_password": ""
+    },
+    {
+      "type": "windows-restart"
     }
   ]
 }
