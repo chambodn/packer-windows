@@ -1,14 +1,37 @@
 $ErrorActionPreference = "Stop"
 
-$registryPath = "HKCU:\Software\ScriptingGuys\Scripts"
-$Name = "Version"
-$value = "1"
+class EntryRegistry {
+    [string]$name
+    [string]$type
+    [string]$path
+    [int]$data;
 
-If(!(Test-Path $registryPath)){
-    New-Item -Path $registryPath -Force | Out-Null
-    New-ItemProperty -Path $registryPath -Name $name -Value $value -PropertyType DWORD -Force | Out-Null
+    EntryRegistry(
+        [string]$name,
+        [string]$type,
+        [string]$path,
+        [int]$data
+    ){
+        $this.name = $name
+        $this.type = $type
+        $this.path = $path
+        $this.data = $data
+    }
 }
-Else {
-    New-ItemProperty -Path $registryPath -Name $name -Value $value -PropertyType DWORD -Force | Out-Null
+
+$entries = @([EntryRegistry]::new("Hidden","dword","HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced",1),
+             [EntryRegistry]::new("HideFileExt","dword","HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced",0),
+             [EntryRegistry]::new("ConsentPromptBehaviorAdmin","dword","HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System",0))
+
+$entries | ForEach{
+    If(!(Test-Path $_.path)){
+        New-Item -Path $_.path -Force | Out-Null
+        New-ItemProperty -Path $_.path -Name $_.name -Value $_.data -PropertyType $_.type -Force | Out-Null
+    }
+    Else {
+        New-ItemProperty -Path $_.path -Name $_.name -Value $_.data -PropertyType $_.type -Force | Out-Null
+    }
 }
+
+
 
