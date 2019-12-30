@@ -56,6 +56,8 @@
     },
     {
       "type":  "powershell",
+      "elevated_user": "Administrator",
+      "elevated_password": "{{.WinRMPassword}}",
       "scripts": [
         "scripts/setup.ps1",
         "scripts/install-chocolatey.ps1",

@@ -1,4 +1,5 @@
 $ErrorActionPreference = "Stop"
+#Requires -RunAsAdministrator
 
 class EntryRegistry {
     [string]$name
