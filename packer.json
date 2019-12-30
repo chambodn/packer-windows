@@ -57,6 +57,9 @@
     {
       "type":  "powershell",
       "scripts": [
+        "scripts/00_setup.ps1",
+        "scripts/01_install-chocolatey.ps1",
+        "scripts/02_win-updates.ps1",
         "scripts/03_update-registry.ps1"
         ],
       "elevated_user": "SYSTEM",
