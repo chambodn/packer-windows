@@ -32,22 +32,22 @@
      {
       "type": "powershell",
       "inline": [
-        "Write-Output \"Set TimeZone to Romance\"",
+        "Write-Output \"Set TimeZone to Romance...\"",
         "Set-TimeZone -Id \"Romance Standard Time\" -PassThru",
 
-        "Write-Output \"Change unicode language\"",
+        "Write-Output \"Change unicode language...\"",
         "Set-WinSystemLocale -SystemLocale en-GB",
 
-        "Write-Output \"Ensure the required NuGet package provider version is installed\"",
+        "Write-Output \"Ensure the required NuGet package provider version is installed...\"",
         "Find-PackageProvider -Name Nuget -ForceBootstrap -IncludeDependencies -Force",
         
-        "Write-Output \"Install PowerShellGet module\"",
+        "Write-Output \"Install PowerShellGet module...\"",
         "Install-Module PowerShellGet -Force -AllowClobber",
 
-        "Write-Output \"Install LoopbackAdapter module:\"",
+        "Write-Output \"Install LoopbackAdapter module...\"",
         "Install-Module LoopbackAdapter -Force -AllowClobber",
 
-        "Write-Output \"Download and install pstools\"",
+        "Write-Output \"Download and install pstools...\"",
         "Invoke-WebRequest -Uri {{user `pstools_url`}} -OutFile $env:TEMP\\pstools.zip",
         "Microsoft.PowerShell.Archive\\Expand-Archive -Path $Env:TEMP\\pstools.zip -DestinationPath $env:TEMP\\pstools",
         "Move-Item -Path $env:TEMP\\pstools\\psexec.exe C:\\WINDOWS\\system32\\psexec.exe",
@@ -58,6 +58,7 @@
       "type":  "powershell",
       "elevated_user": "{{user `packer_user`}}",
       "elevated_password": "{{.WinRMPassword}}",
+      "elevated_execute_command": "powershell -NonInteractive -NoProfile -NoLogo -ExecutionPolicy Unrestricted -Command \"$ErrorActionPreference = 'Stop'; . {{.Vars}}; &'{{.Path}}'; if ((test-path variable:global:lastexitcode)) {{ exit $LastExitCode }}}}\"",
       "scripts": [
         "scripts/setup.ps1",
         "scripts/install-chocolatey.ps1",
