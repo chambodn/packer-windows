@@ -19,3 +19,4 @@ jobs:
         env:
           GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
           GKE_ACCOUNT: ${{ secrets.GKE_ACCOUNT }}
+          APP_USER_PASSWORD: ${{ secrets.APP_USER_PASSWORD }}
