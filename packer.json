@@ -47,11 +47,8 @@
         "Write-Output \"Install LoopbackAdapter module...\"",
         "Install-Module LoopbackAdapter -Force -AllowClobber",
 
-        "Write-Output \"Download and install pstools...\"",
-        "Invoke-WebRequest -Uri https://download.sysinternals.com/files/PSTools.zip -OutFile $env:TEMP\\pstools.zip",
-        "Microsoft.PowerShell.Archive\\Expand-Archive -Path $Env:TEMP\\pstools.zip -DestinationPath $env:TEMP\\pstools",
-        "Move-Item -Path $env:TEMP\\pstools\\psexec.exe C:\\WINDOWS\\system32\\psexec.exe",
-        "Remove-Item -Path $env:TEMP\\pstools -Recurse"
+        "Write-Output \"Install PSWindowsUpdate module...\"",
+        "Install-Module PSWindowsUpdate -Force"       
       ]
     },
     {
@@ -61,7 +58,8 @@
       "scripts": [
         "scripts/setup.ps1",
         "scripts/install-chocolatey.ps1",
-        "scripts/update-registry.ps1"
+        "scripts/update-registry.ps1",
+        "scripts/install-pstools.ps1"
         ]
     },
     {
@@ -69,11 +67,11 @@
       "elevated_user": "SYSTEM",
       "elevated_password": "",
       "inline":[
-        "Write-Output \"Install PSWindowsUpdate module...\"",
-        "Install-Module PSWindowsUpdate -Force",
-
+        "Write-Output \"List Updates available for this host...\"",
         "Get-WUList",
-        "Install-WindowsUpdate -MicrosoftUpdate -AcceptAll -IgnoreReboot"
+        "Write-Output \"Install Updates...\"",
+        "Install-WindowsUpdate -AcceptAll -IgnoreReboot",
+        "Write-Output \"Updates installed successfully.\""
       ]
     },
     {
