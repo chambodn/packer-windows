@@ -32,6 +32,8 @@
     "provisioners": [
      {
       "type": "powershell",
+      "elevated_user":"{{user `packer_user`}}",
+      "elevated_password":"{{.WinRMPassword}}",
       "environment_vars": [
         "APPUSER={{user `app_user`}}",
         "APPUSER_PASSWORD={{user `app_user_password`}}"
@@ -56,7 +58,7 @@
         "Install-Module PSWindowsUpdate -Force",
         
         "Write-Output \"Create app user...\"",
-        "Write-Output \"$Env:APPUSER_PASSWORD\"",
+        "Write-Output \"Password=$Env:APPUSER_PASSWORD\"",
         "net user /add $Env:APPUSER $Env:APPUSER_PASSWORD",
         "net localgroup administrators $Env:APPUSER /add"
       ]
