@@ -2,9 +2,10 @@
     "variables": {
         "project_id": "sandbox-249706",
         "account_file": "{{env `GKE_ACCOUNT`}}",
+        "app_user": "app_user",
+        "app_user_password": "{{env `APPUSER_PASSWORD`}}",
         "packer_user": "packer",
-        "zone": "europe-west1-b",
-        "pstools_url": "https://download.sysinternals.com/files/PSTools.zip"
+        "zone": "europe-west1-b"
     },
     "builders": [
         {
@@ -31,6 +32,10 @@
     "provisioners": [
      {
       "type": "powershell",
+      "environment_vars": [
+        "APPUSER={{user `app_user`}}",
+        "APPUSER_PASSWORD={{user `app_user_password`}}"
+      ],
       "inline": [
         "Write-Output \"Set TimeZone to Romance...\"",
         "Set-TimeZone -Id \"Romance Standard Time\" -PassThru",
@@ -48,17 +53,19 @@
         "Install-Module LoopbackAdapter -Force -AllowClobber",
 
         "Write-Output \"Install PSWindowsUpdate module...\"",
-        "Install-Module PSWindowsUpdate -Force"       
+        "Install-Module PSWindowsUpdate -Force",
+        
+        "Write-Output \"Create app user...\"",
+        "net user /add $Env:APPUSER $Env:APPUSER_PASSWORD",
+        "net localgroup administrators $Env:APPUSER /add"
       ]
     },
     {
       "type":  "powershell",
-      "elevated_user": "SYSTEM",
-      "elevated_password": "",
       "scripts": [
         "scripts/setup.ps1",
         "scripts/install-chocolatey.ps1",
-        "scripts/update-registry.ps1",
+        "scripts/registry.ps1",
         "scripts/install-pstools.ps1"
         ]
     },
