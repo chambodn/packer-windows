@@ -32,8 +32,6 @@
     "provisioners": [
      {
       "type": "powershell",
-      "elevated_user":"{{user `packer_user`}}",
-      "elevated_password":"{{.WinRMPassword}}",
       "environment_vars": [
         "APPUSER={{user `app_user`}}",
         "APPUSER_PASSWORD={{user `app_user_password`}}"
