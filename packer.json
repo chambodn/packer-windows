@@ -56,7 +56,6 @@
         "Install-Module PSWindowsUpdate -Force",
         
         "Write-Output \"Create app user...\"",
-        "Write-Output \"USER=$Env:APPUSER Password=$Env:APPUSER_PASSWORD\"",
         "net user /add $Env:APPUSER $Env:APPUSER_PASSWORD",
         "net localgroup administrators $Env:APPUSER /add"
       ]
