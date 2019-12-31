@@ -30,11 +30,11 @@ Write-Host "Update / Create few registry entries..."
 try{
     $entries | ForEach{
         If(!(Test-Path $_.path)){
-            New-Item -Path $_.path -Force | Out-Null
-            New-ItemProperty -Path $_.path -Name $_.name -Value $_.data -PropertyType $_.type -Force | Out-Null
+            New-Item -Path $_.path -Force
+            New-ItemProperty -Path $_.path -Name $_.name -Value $_.data -PropertyType $_.type -Force
         }
         Else {
-            New-ItemProperty -Path $_.path -Name $_.name -Value $_.data -PropertyType $_.type -Force | Out-Null
+            New-ItemProperty -Path $_.path -Name $_.name -Value $_.data -PropertyType $_.type -Force
         }
     }
     Write-Host "Registry successfully updated"
