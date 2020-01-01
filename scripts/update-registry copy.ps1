@@ -20,10 +20,10 @@ class EntryRegistry {
     }
 }
 
-$entries = @([EntryRegistry]::new("Hidden","dword","HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced",1),
-             [EntryRegistry]::new("HideFileExt","dword","HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced",0),
+$entries = @([EntryRegistry]::new("Hidden","dword","HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced",1),
+             [EntryRegistry]::new("HideFileExt","dword","HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced",0),
              [EntryRegistry]::new("ConsentPromptBehaviorAdmin","dword","HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System",0)
-             [EntryRegistry]::new("DoNotOpenServerManagerAtLogon","dword","HKLM:\Software\Microsoft\ServerManager",1))
+             [EntryRegistry]::new("DoNotOpenServerManagerAtLogon","dword","HKCU:\Software\Microsoft\ServerManager",1))
 
 Write-Host "Update / Create few registry entries..."
 

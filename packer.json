@@ -65,7 +65,7 @@
       "scripts": [
         "scripts/setup.ps1",
         "scripts/install-chocolatey.ps1",
-        "scripts/registry.ps1",
+        "scripts/update-registry.ps1",
         "scripts/install-pstools.ps1"
         ]
     },
