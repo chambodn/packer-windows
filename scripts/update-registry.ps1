@@ -25,12 +25,10 @@ $entries = @([EntryRegistry]::new("Hidden","dword","HKU:\DEFAULT\Software\Micros
              [EntryRegistry]::new("ConsentPromptBehaviorAdmin","dword","HKU:\DEFAULT\Software\Microsoft\Windows\CurrentVersion\Policies\System",0)
              [EntryRegistry]::new("DoNotOpenServerManagerAtLogon","dword","HKU:\DEFAULT\Software\Microsoft\ServerManager",1))
 
-New-PSDrive -PSProvider Registry -Name HKU -Root HKEY_USERS
-
-
 Write-Host "Attempting to mount default registry hive"
 
-$null = REG LOAD HKU\DEFAULT C:\Users\Default\NTUSER.DAT
+New-PSDrive -PSProvider Registry -Name HKU -Root HKEY_USERS
+REG LOAD HKU\DEFAULT C:\Users\Default\NTUSER.DAT
              
 try{
     $entries | ForEach{
@@ -50,5 +48,5 @@ catch {
 }
 
 [gc]::collect()
-reg unload HKU\UserHive
+reg unload HKU\DEFAULT
 Remove-PSDrive -Name HKU
