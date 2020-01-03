@@ -20,15 +20,17 @@ class EntryRegistry {
     }
 }
 
-$entries = @([EntryRegistry]::new("Hidden","dword","HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced",1),
-             [EntryRegistry]::new("HideFileExt","dword","HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced",0),
-             [EntryRegistry]::new("ConsentPromptBehaviorAdmin","dword","HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System",0)
-             [EntryRegistry]::new("DoNotOpenServerManagerAtLogon","dword","HKLM:\Software\Microsoft\ServerManager",1))
+$entries = @([EntryRegistry]::new("Hidden","dword","HKU:\DEFAULT\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced",1),
+             [EntryRegistry]::new("HideFileExt","dword","HKU:\DEFAULT\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced",0),
+             [EntryRegistry]::new("ConsentPromptBehaviorAdmin","dword","HKU:\DEFAULT\Software\Microsoft\Windows\CurrentVersion\Policies\System",0)
+             [EntryRegistry]::new("DoNotOpenServerManagerAtLogon","dword","HKU:\DEFAULT\Software\Microsoft\ServerManager",1))
+
+New-PSDrive -PSProvider Registry -Name HKU -Root HKEY_USERS
+
 
 Write-Host "Attempting to mount default registry hive"
 
-& REG LOAD HKLM\DEFAULT C:\Users\Default\NTUSER.DAT
-Push-Location 'HKLM:\DEFAULT\Software\Microsoft\Internet Explorer'
+$null = REG LOAD HKU\DEFAULT C:\Users\Default\NTUSER.DAT
              
 try{
     $entries | ForEach{
@@ -46,3 +48,7 @@ catch {
     Write-Host "An error occurred:"
     Write-Host $_    
 }
+
+[gc]::collect()
+reg unload HKU\UserHive
+Remove-PSDrive -Name HKU
