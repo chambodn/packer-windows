@@ -40,7 +40,13 @@ $ProfileList = gp 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileLis
     Select  @{name="SID";expression={$_.PSChildName}}, 
             @{name="UserHive";expression={"$($_.ProfileImagePath)\ntuser.dat"}}, 
             @{name="Username";expression={$_.ProfileImagePath -replace '^(.*[\\\/])', ''}}
- 
+
+# Add in the .DEFAULT User Profile
+$DefaultProfile = "" | Select-Object SID, UserHive
+$DefaultProfile.SID = ".DEFAULT"
+$DefaultProfile.Userhive = "C:\Users\Default\NTUSER.DAT"
+$ProfileList += $DefaultProfile
+
 # Get all user SIDs found in HKEY_USERS (ntuder.dat files that are loaded)
 $LoadedHives = gci Registry::HKEY_USERS | ? {$_.PSChildname -match $PatternSID} | Select @{name="SID";expression={$_.PSChildName}}
  

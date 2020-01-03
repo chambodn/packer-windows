@@ -25,8 +25,11 @@ $entries = @([EntryRegistry]::new("Hidden","dword","HKLM:\Software\Microsoft\Win
              [EntryRegistry]::new("ConsentPromptBehaviorAdmin","dword","HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System",0)
              [EntryRegistry]::new("DoNotOpenServerManagerAtLogon","dword","HKLM:\Software\Microsoft\ServerManager",1))
 
-Write-Host "Update / Create few registry entries..."
+Write-Host "Attempting to mount default registry hive"
 
+& REG LOAD HKLM\DEFAULT C:\Users\Default\NTUSER.DAT
+Push-Location 'HKLM:\DEFAULT\Software\Microsoft\Internet Explorer'
+             
 try{
     $entries | ForEach{
         If(!(Test-Path $_.path)){
