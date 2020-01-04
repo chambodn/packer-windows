@@ -1,6 +1,6 @@
 {
     "variables": {
-        "project_id": "sandbox-249706",
+        "project_id": "{{env `PROJECT_ID`}}",
         "account_file": "{{env `GKE_ACCOUNT`}}",
         "app_user": "app_user",
         "app_user_password": "{{env `APPUSER_PASSWORD`}}",

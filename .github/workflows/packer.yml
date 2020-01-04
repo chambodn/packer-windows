@@ -20,3 +20,4 @@ jobs:
           GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
           GKE_ACCOUNT: ${{ secrets.GKE_ACCOUNT }}
           APPUSER_PASSWORD: ${{ secrets.APPUSER_PASSWORD }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
