@@ -7,11 +7,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      
       - uses: actions/checkout@v1
+      
       - name: packer validate packer.json
         uses: docker://dchambon/packer-ansible:latest
         with:
           args: validate packer.json
+        env:
+          GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
+          GKE_ACCOUNT: ${{ secrets.GKE_ACCOUNT }}
+          APPUSER_PASSWORD: ${{ secrets.APPUSER_PASSWORD }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+
       - name: packer build packer.json
         uses: docker://dchambon/packer-ansible:latest
         with:
